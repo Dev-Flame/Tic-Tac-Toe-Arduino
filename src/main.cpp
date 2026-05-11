@@ -43,12 +43,14 @@ Adafruit_FT6206 touchController = Adafruit_FT6206();
 
 TicTacToe game;
 
+
 // Function prototypes
 void drawBoard(Board* board);
 void drawCircle(const int row, const int col);
 void drawLines();
 void drawX(const int row, const int col);
 void initiatePins(const int pins[], const int size);
+
 
 // Setup + loop ------------------------------------------------------------
 void setup() {
