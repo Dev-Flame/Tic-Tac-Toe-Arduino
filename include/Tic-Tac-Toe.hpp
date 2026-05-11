@@ -25,7 +25,6 @@ class TicTacToe {
         TicTacToe();
         ~TicTacToe();
 
-        bool checkWin();
         bool isDone() const;
         void makeMove(const int row, const int column);
 

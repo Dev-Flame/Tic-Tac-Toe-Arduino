@@ -6,7 +6,7 @@
 
 class TicTacToeAI {
     private:
-        
+        Mark AI_Mark;
 
     public:
 

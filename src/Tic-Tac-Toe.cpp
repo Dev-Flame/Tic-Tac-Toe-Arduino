@@ -9,54 +9,6 @@ TicTacToe::~TicTacToe() {
     delete board;
 }
 
-// Called after every move
-bool TicTacToe::checkWin() {
-    bool win;
-
-    // Check rows
-    for (int i = 0; i < 3; i++) {
-        win = true;
-
-        for (int j = 0; j < 3; j++) {
-            if (board->getMark(i, j) != turnMark) win = false;
-        }
-
-        if (win) return true;
-    }
-
-    // Check columns
-    for (int i = 0; i < 3; i++) {
-        win = true;
-
-        for (int j = 0; j < 3; j++) {
-            if (board->getMark(j, i) != turnMark) win = false;
-        }
-
-        if (win) return true;
-    }
-
-    // check left to right diagonal
-    win = true;
-
-    for (int i = 0; i < 3; i++) {
-        if (board->getMark(i, i) != turnMark) win = false;
-    }
-
-    if (win) return true;
-
-    // check right to left diagonal
-    win = true;
-
-    for (int i = 0; i < 3; i++) {
-        if (board->getMark(i, 2 - i) != turnMark) win = false;
-    }
-
-    if (win) return true;
-
-    // At this point, no one has won yet
-    return false;
-}
-
 bool TicTacToe::isDone() const {
     return gameDone;
 }
@@ -68,8 +20,8 @@ void TicTacToe::makeMove(const int row, const int col) {
 
     board->setMark(row, col, turnMark);
 
-    // Check if someone has won or if a draw took place
-    if (checkWin()) {
+    // Check if person who just made a move won
+    if (board->checkWin(turnMark)) {
         gameDone = true;
         winner = turnMark;
     } else if (board->getNumMarks() == 9) {

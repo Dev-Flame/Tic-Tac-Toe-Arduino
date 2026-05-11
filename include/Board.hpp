@@ -15,6 +15,7 @@ class Board {
 
         Mark getMark(const int row, const int col) const;
         void setMark(const int row, const int col, const Mark &mark);
-
         int getNumMarks() const;
+
+        bool checkWin(Mark& markCheck) const;
 };

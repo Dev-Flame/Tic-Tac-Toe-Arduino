@@ -8,7 +8,8 @@ BoardTreeLayer::BoardTreeLayer() : currentMark(Mark(Symbol::X)), layerStates(new
 }
 
 // Used to create a layer of all possible boards from a previous board
-BoardTreeLayer::BoardTreeLayer(int size, Board* newLayer, BoardTreeLayer* prevLayer) : numStates(size), layerStates(newLayer), layerStateScores(new int[size]), nextLayers(new BoardTreeLayer*[size]), prevLayer(prevLayer) {
+BoardTreeLayer::BoardTreeLayer(int size, Board* newLayer, BoardTreeLayer* prevLayer) : numStates(size), layerStates(newLayer), layerStateScores(new int[size]), winningStates(new bool[size]), nextLayers(new BoardTreeLayer*[size]), prevLayer(prevLayer) {
+
     constructNextLayers();
 };
 
@@ -35,6 +36,9 @@ void BoardTreeLayer::constructNextLayers() {
     for (int i = 0; i < numStates; i++) {
         currentBoard = &layerStates[i];
 
+        // First check if current board is in a winning state
+
+
         // Compute the number of boards that will be in the new layer
         for (int j = 0; j < 3; j++) {
             for (int k = 0; k < 3; k++) {
@@ -48,7 +52,6 @@ void BoardTreeLayer::constructNextLayers() {
         // Allocate memory for new layer of boards
         newLayer = new Board[newBoards];
 
-
         for (int j = 0; j < newBoards; j++) {
             for (int k = 0; k < 3; k++) {
                 for (int l = 0; l < 3; l++) {
@@ -56,5 +59,10 @@ void BoardTreeLayer::constructNextLayers() {
                 }
             }
         }
+    }
+}
+
+void BoardTreeLayer::setWinningStates() {
+    for (int i = 0; i < numStates; i++) {
     }
 }
