@@ -1,89 +1,72 @@
-#include "Board.hpp"
+#include "Board.h"
 
-
-// Default constructor, creates an empty board
-Board::Board() : numMarks(0) {
+Board::Board() {
     clear();
 }
 
-// Copy constructor, copies a board
-Board::Board(const Board& boardToCopy) {
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            setMark(i, j, boardToCopy.getMark(i, j));
-        }
-    }
-}
-
-// Sets all Marks to EMPTY
 void Board::clear() {
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            setMark(i, j, Mark(Symbol::EMPTY));
+    for (int row = 0; row < 3; row++) {
+        for (int col = 0; col < 3; col++) {
+            spaces[row][col] = ' ';
+        }
+    }
+}
+
+bool Board::placeMark(int row, int col, char mark) {
+    if (row < 0 || row > 2 || col < 0 || col > 2) {
+        return false;
+    }
+
+    if (!isEmpty(row, col)) {
+        return false;
+    }
+
+    spaces[row][col] = mark;
+    return true;
+}
+
+char Board::getMark(int row, int col) const {
+    if (row < 0 || row > 2 || col < 0 || col > 2) {
+        return ' ';
+    }
+
+    return spaces[row][col];
+}
+
+bool Board::isEmpty(int row, int col) const {
+    return getMark(row, col) == ' ';
+}
+
+bool Board::isFull() const {
+    for (int row = 0; row < 3; row++) {
+        for (int col = 0; col < 3; col++) {
+            if (spaces[row][col] == ' ') {
+                return false;
+            }
         }
     }
 
-    numMarks = 0;
+    return true;
 }
 
-Mark Board::getMark(const int row, const int col) const {
-    return state[row][col];
-}
-
-void Board::setMark(const int row, const int col, const Mark &mark) {
-    state[row][col] = mark;
-    numMarks++;
-}
-
-int Board::getNumMarks() const {
-    return numMarks;
-}
-
-// Checks to see if a certain player has won (markCheck)
-// Does NOT check to see if someone won in general
-bool Board::checkWin(Mark& markCheck) const {
-    bool win;
-
-    // Check rows
+char Board::getWinner() const {
     for (int i = 0; i < 3; i++) {
-        win = true;
-
-        for (int j = 0; j < 3; j++) {
-            if (getMark(i, j) != markCheck) win = false;
+        if (spaces[i][0] != ' ' && spaces[i][0] == spaces[i][1] && spaces[i][1] == spaces[i][2]) {
+            return spaces[i][0];
         }
 
-        if (win) return true;
-    }
-
-    // Check columns
-    for (int i = 0; i < 3; i++) {
-        win = true;
-
-        for (int j = 0; j < 3; j++) {
-            if (getMark(j, i) != markCheck) win = false;
+        if (spaces[0][i] != ' ' && spaces[0][i] == spaces[1][i] && spaces[1][i] == spaces[2][i]) {
+            return spaces[0][i];
         }
-
-        if (win) return true;
     }
 
-    // check left to right diagonal
-    win = true;
-
-    for (int i = 0; i < 3; i++) {
-        if (getMark(i, i) != markCheck) win = false;
+    if (spaces[0][0] != ' ' && spaces[0][0] == spaces[1][1] && spaces[1][1] == spaces[2][2]) {
+        return spaces[0][0];
     }
 
-    if (win) return true;
-
-    // check right to left diagonal
-    win = true;
-
-    for (int i = 0; i < 3; i++) {
-        if (getMark(i, 2 - i) != markCheck) win = false;
+    if (spaces[0][2] != ' ' && spaces[0][2] == spaces[1][1] && spaces[1][1] == spaces[2][0]) {
+        return spaces[0][2];
     }
 
-    if (win) return true;
-
-    // At this point, no one has won yet
-    return false;
+    return ' ';
 }
