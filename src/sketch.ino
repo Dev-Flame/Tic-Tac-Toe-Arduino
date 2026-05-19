@@ -143,15 +143,20 @@ void showMenu() {
 // -------------------------
 // Read touch input
 // -------------------------
+
 bool readTouch(int &x, int &y) {
     TSPoint p = touch.getPoint();
-    pinMode(A2, OUTPUT);
+    
+    // Reset pins so the screen can draw properly
+    pinMode(A2, OUTPUT); 
     pinMode(A3, OUTPUT);
     
+    // Ignore accidental or light touches
     if (p.z < 200 || p.z > 1000) {
         return false;
     }
     
+    // Map raw hardware values to the 240x320 screen dimensions
     x = constrain(map(p.x, 120, 900, screenWidth, 0), 0, screenWidth - 1);
     y = constrain(map(p.y, 70,  920, 0, screenHeight), 0, screenHeight - 1);
     return true;
