@@ -3,7 +3,6 @@
 
 struct Mark {
     int row, col;
-    unsigned long time;
 };
 
 class Player {
@@ -15,7 +14,7 @@ public:
     bool isComputer() const;
 
     void addMark(int row, int col);
-    Mark getExpired();   // returns {-1,-1,0} if nothing expired
+    Mark getExpired();   // returns {-1,-1} if nothing expired
     void clearMarks();
 
 private:
