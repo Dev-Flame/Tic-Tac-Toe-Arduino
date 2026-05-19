@@ -31,6 +31,9 @@ private:
     char turn, winner;
     bool over;
 
+    std::deque<int> availableMoves;
+    
+
     void finishTurn();
     bool findWinningMove(char mark, int &row, int &col) const;
     bool wouldWin(char mark, int row, int col) const;

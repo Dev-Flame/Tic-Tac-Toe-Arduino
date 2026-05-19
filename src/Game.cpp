@@ -30,6 +30,20 @@ bool Game::playHumanMove(int row, int col) {
     if (!board.placeMark(row, col, turn)) {
         return false;
     }
+
+    // Convert move to its mapped value
+    int convert = (row * 3) + (col + 1);
+    int temp;
+
+    // Search for mapped value in availableMoves deque
+    while (availableMoves.front() != convert) {
+        temp  = availableMoves.front();
+        availableMoves.pop_front();
+        availableMoves.push_back(temp);
+    }
+
+    // Permanently remove it from the deque
+    availableMoves.pop_front();
     
     getCurrentPlayer().addMark(row, col);
     finishTurn();
@@ -41,11 +55,22 @@ bool Game::playComputerMove(int &row, int &col) {
         return false;
     }
 
-    // Random AI Placeholder Logic
-    do {
-        row = random() % 3;
-        col = random() % 3;
-    } while (!board.isEmpty(row, col));
+    // Choose random move from availableMoves deque
+    int choice = (random() % availableMoves.size()) + 1;
+    int counter = 1;
+    int temp;
+
+    while (counter != choice) {
+        temp = availableMoves.front();
+        availableMoves.pop_front();
+        availableMoves.push_back(temp);
+    }
+
+    row = (availableMoves.front() / 3) - 1;
+    col = (availableMoves.front() % 3);
+
+    // Permanently remove chosen move from deque
+    availableMoves.pop_front();
     
     board.placeMark(row, col, turn);
     getCurrentPlayer().addMark(row, col);
