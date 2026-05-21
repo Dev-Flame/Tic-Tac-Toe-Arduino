@@ -34,9 +34,9 @@ void drawBoard() {
     
     screen.setTextColor(0xFFFF); 
     screen.setTextSize(2);
-    screen.setCursor(28, 295); 
+    screen.setCursor(38, 295); 
     screen.print("MENU");
-    screen.setCursor(132, 295); 
+    screen.setCursor(140, 295); 
     screen.print("RESTART");
 }
 
@@ -101,13 +101,14 @@ void updateStatus() {
     screen.fillRect(0, 0, screenWidth, BOARD_Y, 0x0000);
     screen.setTextColor(0xFFFF); 
     screen.setTextSize(2);
-    screen.setCursor(8, 12);
+    screen.setCursor(86, 12);
     
     if (game.isOver()) {
         char winner = game.getWinner();
         if (winner == ' ') {
             screen.print("Draw!");
         } else { 
+            screen.setCursor(84, 12);
             screen.print(winner); 
             screen.print(" wins!"); 
             drawWinLine();
@@ -125,18 +126,18 @@ void showMenu() {
     screen.fillScreen(0x0000);
     screen.setTextColor(0xFFFF); 
     screen.setTextSize(3);
-    screen.setCursor(10, 40); 
+    screen.setCursor(22, 40); 
     screen.print("TIC TAC TOE");
     
     // 2 Player Button
     screen.fillRect(25, 120, 190, 55, 0x03BF);
     screen.setTextSize(2); 
-    screen.setCursor(45, 140); 
+    screen.setCursor(67, 140); 
     screen.print("2 PLAYERS");
 
     // Play AI Button
     screen.fillRect(25, 190, 190, 55, 0x07E0);
-    screen.setCursor(65, 210); 
+    screen.setCursor(80, 210); 
     screen.print("PLAY AI");
 }
 

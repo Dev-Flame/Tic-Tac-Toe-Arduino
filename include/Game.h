@@ -30,6 +30,8 @@ private:
     Player playerX, playerO;
     char turn, winner;
     bool over;
+    // `availableMoves` removed — choose moves by scanning the board instead
+    
 
     void finishTurn();
     bool findWinningMove(char mark, int &row, int &col) const;
