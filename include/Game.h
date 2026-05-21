@@ -30,6 +30,8 @@ private:
     Player playerX, playerO;
     char turn, winner;
     bool over;
+    // `availableMoves` removed — choose moves by scanning the board instead
+    
 
     std::deque<int> availableMoves;
     

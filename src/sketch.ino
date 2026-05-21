@@ -108,6 +108,7 @@ void updateStatus() {
         if (winner == ' ') {
             screen.print("Draw!");
         } else { 
+            screen.setCursor(84, 12);
             screen.print(winner); 
             screen.print(" wins!"); 
             drawWinLine();
@@ -132,12 +133,20 @@ void showMenu() {
     // 2 Player Button
     screen.fillRect(25, 120, 190, 55, 0x03BF);
     screen.setTextSize(2); 
+<<<<<<< HEAD
     screen.setCursor(66, 140); 
+=======
+    screen.setCursor(67, 140); 
+>>>>>>> 146ffdfb51c372b1125a144a61ce86f9eeff874c
     screen.print("2 PLAYERS");
 
     // Play AI Button
     screen.fillRect(25, 190, 190, 55, 0x07E0);
+<<<<<<< HEAD
     screen.setCursor(78, 210); 
+=======
+    screen.setCursor(80, 210); 
+>>>>>>> 146ffdfb51c372b1125a144a61ce86f9eeff874c
     screen.print("PLAY AI");
 }
 
