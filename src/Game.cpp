@@ -139,7 +139,7 @@ void Game::removeMark(int row, int col) {
     board.removeMark(row, col);
 }
 
- bool Game::findWinningMove(char mark, int &row, int &col) const {
+bool Game::findWinningMove(char mark, int &row, int &col) const {
     for (int r = 0; r < 3; r++) {
         for (int c = 0; c < 3; c++) {
             if (board.isEmpty(r, c) && wouldWin(mark, r, c)) {
@@ -150,7 +150,7 @@ void Game::removeMark(int row, int col) {
         }
     }
     return false;
- };
+}
 
 bool Game::wouldWin(char mark, int row, int col) const {
     board.placeMark(row, col, mark);

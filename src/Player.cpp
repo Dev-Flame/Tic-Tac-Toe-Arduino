@@ -1,6 +1,7 @@
 #include "Player.h"
 #include <Arduino.h>
 
+
 Player::Player() : mark('X'), computer(false) {}
 
 Player::Player(char playerMark, bool isComputer) : mark(playerMark), computer(isComputer) {}
@@ -14,23 +15,27 @@ bool Player::isComputer() const {
 }
 
 void Player::addMark(int row, int col) {
-    markQueue.push({row, col});
+    markQueue.push({row, col, random(2, 9)}); // Lifespan between 2 and 8 turns
 }
 
-// Returns the expired mark, otherwise {-1,-1}
+void Player::tickMarks() {
+    for (int i = markQueue.size(); i > 0; i--) {
+        Mark m = markQueue.front();
+        markQueue.pop();
+        m.turnsLeft--;
+        markQueue.push(m);
+    }
+}
+
 Mark Player::getExpired() {
-    // Randomly expires after 2, 3, or 4 marks are currently on the board
-    if (markQueue.size() > random(2, 5)) {
+    if (!markQueue.empty() && markQueue.front().turnsLeft <= 0) {
         Mark m = markQueue.front();
         markQueue.pop();
         return m;
     }
-    
-    return {-1, -1};
+    return {-1, -1, 0};
 }
 
 void Player::clearMarks() {
-    while (!markQueue.empty()) {
-        markQueue.pop();
-    }
+    while (!markQueue.empty()) markQueue.pop();
 }

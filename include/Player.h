@@ -2,7 +2,9 @@
 #include <queue>
 
 struct Mark {
-    int row, col;
+    int row,
+     col,
+     turnsLeft;
 };
 
 class Player {
@@ -14,7 +16,8 @@ public:
     bool isComputer() const;
 
     void addMark(int row, int col);
-    Mark getExpired();   // returns {-1,-1} if nothing expired
+    void tickMarks();
+    Mark getExpired();
     void clearMarks();
 
 private:

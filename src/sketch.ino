@@ -123,21 +123,58 @@ void updateStatus() {
 // Show the main menu
 // -------------------------
 void showMenu() {
-    screen.fillScreen(0x0000);
-    screen.setTextColor(0xFFFF); 
+    screen.fillScreen(0xFFFF);  // White background
+    
+    // Title
+    screen.setTextColor(0x0000); 
     screen.setTextSize(3);
-    screen.setCursor(22, 40); 
+    screen.setCursor(20, 20); 
     screen.print("TIC TAC TOE");
     
+    // Draw bigger decorative tic tac toe grid under title
+    int gridX = 80;
+    int gridY = 75;
+    int gridSize = 70;
+    int cellSize = 23;
+    
+    // Grid border
+    screen.drawRect(gridX, gridY, gridSize, gridSize, 0x0000);
+    
+    // Draw grid lines
+    for (int i = 1; i < 3; i++) {
+        screen.drawLine(gridX + i * cellSize, gridY, gridX + i * cellSize, gridY + gridSize, 0x0000);
+        screen.drawLine(gridX, gridY + i * cellSize, gridX + gridSize, gridY + i * cellSize, 0x0000);
+    }
+    
+    // Add some X's and O's to the grid (top-left X, middle O, bottom-right X)
+    // Top-left X
+    for (int i = -2; i <= 2; i++) {
+        screen.drawLine(gridX + 5 + i, gridY + 5, gridX + 15 + i, gridY + 15, 0xF800);
+        screen.drawLine(gridX + 5 + i, gridY + 15, gridX + 15 + i, gridY + 5, 0xF800);
+    }
+    
+    // Middle O
+    for (int r = 6; r <= 8; r++) {
+        screen.drawCircle(gridX + 35, gridY + 35, r, 0x07E0);
+    }
+    
+    // Bottom-right X
+    for (int i = -2; i <= 2; i++) {
+        screen.drawLine(gridX + 50 + i, gridY + 50, gridX + 60 + i, gridY + 60, 0xF800);
+        screen.drawLine(gridX + 50 + i, gridY + 60, gridX + 60 + i, gridY + 50, 0xF800);
+    }
+    
     // 2 Player Button
-    screen.fillRect(25, 120, 190, 55, 0x03BF);
+    screen.fillRect(25, 180, 190, 55, 0x4810);
+    screen.setTextColor(0xFFFF);
     screen.setTextSize(2); 
-    screen.setCursor(67, 140); 
+    screen.setCursor(67, 200); 
     screen.print("2 PLAYERS");
 
     // Play AI Button
-    screen.fillRect(25, 190, 190, 55, 0x07E0);
-    screen.setCursor(80, 210); 
+    screen.fillRect(25, 250, 190, 55, 0x07E0);
+    screen.setTextColor(0x0000);
+    screen.setCursor(80, 270); 
     screen.print("PLAY AI");
 }
 
@@ -210,14 +247,14 @@ void loop() {
 
     if (onMenu) {
         // Clicked 2 Players
-        if (x >= 25 && x <= 215 && y >= 120 && y <= 175) { 
+        if (x >= 25 && x <= 215 && y >= 180 && y <= 235) { 
             game.start(TWO_PLAYERS);
             onMenu = false; 
             drawBoard(); 
             updateStatus(); 
         }
         // Clicked Play AI
-        if (x >= 25 && x <= 215 && y >= 190 && y <= 245) { 
+        if (x >= 25 && x <= 215 && y >= 250 && y <= 305) { 
             game.start(PLAYER_VS_COMPUTER);
             onMenu = false; 
             drawBoard(); 
@@ -251,13 +288,17 @@ void loop() {
             
             if (game.playHumanMove(row, col)) {
                 drawMark(row, col, prevTurn);
+                game.getPlayerX().tickMarks();
+                game.getPlayerO().tickMarks();
                 updateStatus();
-                
+
                 if (game.isComputerTurn()) {
-                    delay(400); // Give a slight pause so the AI feels natural
+                    delay(400);
                     int r, c;
                     game.playComputerMove(r, c);
                     drawMark(r, c, 'O');
+                    game.getPlayerX().tickMarks();
+                    game.getPlayerO().tickMarks();
                     updateStatus();
                 }
             }
