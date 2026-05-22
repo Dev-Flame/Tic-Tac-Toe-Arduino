@@ -1,6 +1,7 @@
 #pragma once
 #include "Board.h"
 #include "Player.h"
+#include <deque>
 
 enum GameMode { TWO_PLAYERS, PLAYER_VS_COMPUTER };
 
@@ -30,7 +31,8 @@ private:
     Player playerX, playerO;
     char turn, winner;
     bool over;
-    // `availableMoves` removed — choose moves by scanning the board instead
+   std::deque<int> moveDeque;
+   void rotateDeque(int pos);
     
 
     void finishTurn();

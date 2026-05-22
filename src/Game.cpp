@@ -158,3 +158,12 @@ bool Game::wouldWin(char mark, int row, int col) const {
     board.removeMark(row, col);
     return win;
 }
+
+void Game::rotateDeque(int pos) {
+    for (int i = 0; i < (int)moveDeque.size(); i++) {
+        if (moveDeque[i] == pos) {
+            moveDeque.erase(moveDeque.begin() + i);
+            break;
+        }
+    }
+}
